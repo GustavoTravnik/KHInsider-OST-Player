@@ -1,6 +1,7 @@
 var listGeral = [];
 var listAtual = [];
 var ostName;
+var coreTimer = null;
 
 if ('serviceWorker' in navigator) {
     navigator.serviceWorker
@@ -19,7 +20,7 @@ if ('serviceWorker' in navigator) {
 fillGeralOSTList();
 
 function fillGeralOSTList(){    
-    $("body").mLoading({ text:"Getting Album List...", });
+    $("body").mLoading({ text:"Getting Album List..." });
     if (listGeral.length == 0){
         $.ajax({
             url: "/api/OSTList",
@@ -85,13 +86,14 @@ function createOSTScreen(){
     }
 }
 
-function playMusic(track) {    
+function playMusic(track) {
+    var trackTarget = track.target == undefined ? track : track.target;
     //get track name by <li> text
-    var trackName = track.target.textContent;
+    var trackName = trackTarget.textContent;
     //get index of <li> in main parent
-    var index = $(track.target).prevAll().length;
+    var index = $(trackTarget).prevAll().length;
     //get list of all <li> of <ul>
-    var childs = $(track.target).parent()[0].children;
+    var childs = $(trackTarget).parent()[0].children;
     //Paint selected <li> of orange and other of white
     for (var i = 0; i < childs.length; i++) {
         var currentChild = childs[i];
@@ -100,7 +102,7 @@ function playMusic(track) {
         } else {
             currentChild.style.backgroundColor = "orange";
         }
-    };
+    }
     var objectIndex = 0;
     //get index of main OST object list
     objectIndex = getObjectArrayIndex(ostName);
@@ -109,6 +111,22 @@ function playMusic(track) {
     //set src and play music
     document.getElementById('audio').src = url;
     document.getElementById('audio').play();
+    if (!coreTimer)
+        coreTimer = setInterval(autoNextMusic, 1000);
+}
+
+function autoNextMusic() {
+    if (document.getElementById('audio').ended) {
+        var elementIndex = 0;
+        var tracklist = document.getElementsByClassName('list-group-item');
+        jQuery.grep(tracklist, function (item, index) {
+            if (item.style.backgroundColor == 'orange') elementIndex = index+1;
+        });
+        if (elementIndex == tracklist.length) {
+            elementIndex = 0;
+        }
+        playMusic(tracklist[elementIndex]);
+    }
 }
 
 function getObjectArrayIndex(name){
