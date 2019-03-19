@@ -1,0 +1,39 @@
+﻿<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="manifest" href="manifest.json">
+    <meta name="description" content="Game Music Player">
+    <meta name="theme-color" content="#ffffff">
+    <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' />
+    <link rel="shortcut icon" href="favicon.ico">
+    <link rel="icon" type="image/png" sizes="16x16" href="images/s16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="images/s32.png">
+    <title>OST Music Player</title>
+    <link rel="stylesheet" type="text/css" media="screen" href="css/main.css" async />
+    <link rel="stylesheet" href="css/bootstrap.min.css" async>
+    <link rel="stylesheet" href="css/bootstrap-theme.min.css" async>
+    <link rel="stylesheet" href="css/jquery.mloading.css" async>
+</head>
+<body>
+    <audio id="audio" controls draggable="true"> </audio>
+    <div class="title"> <span> WS Player </span> </div>
+    <div class="geralBody">
+        <div class="geralListContainer">
+            <div class="finder">
+                <label for="geralFinder" class="findLabel"> Busca de OST: </label>
+                <input type="text" id="geralFinder" class="finder" />
+                <div class="findIcon" onclick="findOst()"></div>
+            </div>
+            <div class="geralList">
+                <ul class="list-group" id="geralList"> </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+<script src="js/jquery.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/jquery.mloading.js"></script>
+<script src="js/main.js"></script>
