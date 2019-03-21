@@ -36,7 +36,7 @@ function fillGeralOSTList(){
 }
 
 function findOst(){
-    var searchText = $("#geralFinder").val();
+    var searchText = $("#geralFinder").val().trim();
     if (searchText.length < 3) {
         alert("The search requires at least 3 characters.");
         return;
@@ -44,7 +44,23 @@ function findOst(){
     var searchResult = [];
     for (var i = 0; i < listGeral.length; i++){
         var currentLine = listGeral[i];
-        if (currentLine.toLowerCase().indexOf(searchText.toLowerCase()) != -1){
+        var condition1 = currentLine.toLowerCase().indexOf(searchText.toLowerCase()) != -1;
+        var condition2 = currentLine.toLowerCase().replace(/ /g, "").indexOf(searchText.toLowerCase().replace(/ /g, "")) != -1;
+        var sigla = "";
+        var isEmpty = false;
+        for (var j = 0; j < currentLine.length; j++) {
+            sigla += j == 0 ? currentLine[j] : "";
+            if (isEmpty) {
+                sigla += currentLine[j];
+                isEmpty = false;
+            }
+            if (currentLine[j] == " ") {
+                isEmpty = true;
+            }
+        }
+        var condition3 = sigla.toLowerCase().indexOf(searchText.toLowerCase()) != -1;
+
+        if (condition1 || condition2 || condition3) {
             searchResult.push(currentLine);
         }
     }
