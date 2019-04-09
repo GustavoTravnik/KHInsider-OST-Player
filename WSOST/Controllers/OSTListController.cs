@@ -76,7 +76,7 @@ namespace WSOST.Controllers
             }
             catch(Exception ex)
             {
-
+                System.IO.File.AppendAllText(Path.Combine(Environment.CurrentDirectory, "Erro.txt"), ex.Message + Environment.NewLine);
             }
             return OSTList.Select(k => k.Split('¨')[0]).ToList();
         }
@@ -102,9 +102,10 @@ namespace WSOST.Controllers
                 result.Add(currentSource.Nome, currentSource.Tracks);
                 return result;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                return null;
+                System.IO.File.AppendAllText(Path.Combine(Environment.CurrentDirectory, "Erro.txt"), ex.Message + Environment.NewLine);
+                return new Dictionary<string, Dictionary<string, string>>();
             }
         }
 
