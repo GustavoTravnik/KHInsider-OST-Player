@@ -72,7 +72,7 @@ namespace WSOST
             {
                 sourceList[i] = sourceList[i].Split('"')[0];
             }
-            sourceList = sourceList.Where(k => k.Contains(".mp3") && k.Contains("/ost/")).ToArray();
+            sourceList = sourceList.Where(k => k.Contains(".mp3") && (k.Contains("/ost/") || k.Contains("soundtracks"))).ToArray();
 
 
             return sourceList[0];
